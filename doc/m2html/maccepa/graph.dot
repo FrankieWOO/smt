@@ -1,5 +1,8 @@
 /* Created by mdot for Matlab */
 digraph m2html {
 
+  maccepavd1 [URL="maccepavd1.html"];
+  maccepavd1 [URL="maccepavd1.html"];
+  test_maccepa [URL="test_maccepa.html"];
   test_maccepa [URL="test_maccepa.html"];
 }

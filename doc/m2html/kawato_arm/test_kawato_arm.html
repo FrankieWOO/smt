@@ -15,7 +15,7 @@
 <div><a href="../index.html">Home</a> &gt;  <a href="#">kawato_arm</a> &gt; test_kawato_arm.m</div>
 
 <!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
-<td align="right"><a href="index.html">Index for ./kawato_arm&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+<td align="right"><a href="index.html">Index for .\kawato_arm&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
 
 <h1>test_kawato_arm
 </h1>
@@ -33,7 +33,7 @@
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
 This function calls:
 <ul style="list-style-image:url(../matlabicon.gif)">
-<li><a href="f_kawato_arm.html" class="code" title="function xdot = f_kawato_arm ( x, u, model )">f_kawato_arm</a>	State space dynamics function for the Kawato arm model.</li><li><a href="model_kawato_arm.html" class="code" title="function model = model_kawato_arm">model_kawato_arm</a>	Planar 2 degree of freedom human arm model based on Kawato's human arm model.</li><li><a href=".././simulate/simulate_feedforward.html" class="code" title="function x = simulate_feedforward ( x0, f, u, p )">simulate_feedforward</a>	Simulate trajectory under open-loop, feed forward control, in continuous time</li></ul>
+<li><a href="f_kawato_arm.html" class="code" title="function xdot = f_kawato_arm ( x, u, model )">f_kawato_arm</a>	State space dynamics function for the Kawato arm model.</li><li><a href="model_kawato_arm.html" class="code" title="function model = model_kawato_arm">model_kawato_arm</a>	Planar 2 degree of freedom human arm model based on Kawato's human arm model.</li><li><a href="../simulate/simulate_feedforward.html" class="code" title="function x = simulate_feedforward ( x0, f, u, p )">simulate_feedforward</a>	Simulate trajectory under open-loop, feed forward control, in continuous time</li><li><a href="../simulate/simulate_feedforward.html" class="code" title="function x = simulate_feedforward ( x0, f, u, p )">simulate_feedforward</a>	Simulate trajectory under open-loop, feed forward control, in continuous time</li></ul>
 This function is called by:
 <ul style="list-style-image:url(../matlabicon.gif)">
 </ul>
@@ -63,12 +63,12 @@ This function is called by:
 0019 U = sin(5*rand(6,1)*t);
 0020 
 0021 <span class="comment">% simulate</span>
-0022 X = <a href=".././simulate/simulate_feedforward.html" class="code" title="function x = simulate_feedforward ( x0, f, u, p )">simulate_feedforward</a> ( x0, f, U, p );
+0022 X = <a href="../simulate/simulate_feedforward.html" class="code" title="function x = simulate_feedforward ( x0, f, u, p )">simulate_feedforward</a> ( x0, f, U, p );
 0023 
 0024 <span class="comment">% plot joint angles, velocities, commands</span>
 0025 subplot(3,1,1),plot(X(1:2,:)'),ylabel(<span class="string">'q (rad)'</span>)
 0026 subplot(3,1,2),plot(X(3:4,:)'),ylabel(<span class="string">'dq/dt (rad/s)'</span>)
 0027 subplot(3,1,3),plot(U'),ylabel(<span class="string">'u'</span>),xlabel(<span class="string">'t (s)'</span>)</pre></div>
-<hr><address>Generated on Tue 02-Feb-2016 14:49:15 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+<hr><address>Generated on Wed 10-Feb-2016 17:32:33 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

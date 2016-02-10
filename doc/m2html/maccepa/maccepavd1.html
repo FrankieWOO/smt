@@ -2,8 +2,8 @@
                 "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html>
 <head>
-  <title>Description of test_maccepa</title>
-  <meta name="keywords" content="test_maccepa">
+  <title>Description of maccepavd1</title>
+  <meta name="keywords" content="maccepavd1">
   <meta name="description" content="">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
@@ -12,12 +12,12 @@
 </head>
 <body>
 <a name="_top"></a>
-<div><a href="../index.html">Home</a> &gt;  <a href="#">maccepa</a> &gt; test_maccepa.m</div>
+<div><a href="../index.html">Home</a> &gt;  <a href="#">maccepa</a> &gt; maccepavd1.m</div>
 
 <!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
 <td align="right"><a href="index.html">Index for .\maccepa&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
 
-<h1>test_maccepa
+<h1>maccepavd1
 </h1>
 
 <h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
@@ -43,52 +43,48 @@ This function is called by:
 
 <h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
 <div class="fragment"><pre>0001 clear all
-0002 curPath = pwd;
-0003 curPaths = strsplit(curPath,{<span class="string">'\'</span>,<span class="string">'/'</span>});
-0004 fatherPath = strjoin(curPaths(1:end-1),<span class="string">'/'</span>);
-0005 addpath(genpath(curPath));
-0006 addpath([fatherPath,<span class="string">'/simulate'</span>]);
-0007 
-0008 <span class="comment">% set up simulation</span>
-0009 dt = .02;              <span class="comment">% control frequency</span>
-0010 N  = 400;              <span class="comment">% no. samples</span>
-0011 t  = (0:N-1)*dt;       <span class="comment">% sample times</span>
-0012 x0 = zeros(2,1);       <span class="comment">% start state</span>
-0013 
-0014 <span class="comment">% set up dynamics function</span>
-0015 m  = model_maccepa(<span class="string">'maccepa_model'</span>); <span class="comment">% model parameters</span>
-0016 f = @(x, u) <a href="../maccepa/m-files/f_maccepa.html" class="code" title="function xdot = f_maccepa ( x, u, model )">f_maccepa</a>  ( x, u, m ); <span class="comment">% dynamics function</span>
-0017 
-0018 <span class="comment">% simulation parameter struct</span>
-0019 p = [];
-0020 p.dt = dt;
-0021 p.solver = <span class="string">'rk4'</span>;
+0002 addpath(genpath(<span class="string">'E:\MACCEPA\smt\maccepa'</span>))
+0003 addpath(<span class="string">'E:\MACCEPA\smt\simulate'</span>)
+0004 
+0005 <span class="comment">% set up simulation</span>
+0006 dt = .02;              <span class="comment">% control frequency</span>
+0007 N  = 400;              <span class="comment">% no. samples</span>
+0008 t  = (0:N-1)*dt;       <span class="comment">% sample times</span>
+0009 x0 = zeros(2,1);       <span class="comment">% start state</span>
+0010 
+0011 <span class="comment">% set up dynamics function</span>
+0012 m  = model_maccepa(<span class="string">'maccepa_model'</span>); <span class="comment">% model parameters</span>
+0013 f = @(x, u) <a href="../maccepa/m-files/f_maccepa.html" class="code" title="function xdot = f_maccepa ( x, u, model )">f_maccepa</a>  ( x, u, m ); <span class="comment">% dynamics function</span>
+0014 
+0015 <span class="comment">% simulation parameter struct</span>
+0016 p = [];
+0017 p.dt = dt;
+0018 p.solver = <span class="string">'rk4'</span>;
+0019 
+0020 <span class="comment">% define feed forward commands</span>
+0021 umax=m.umax;
 0022 
-0023 <span class="comment">% define feed forward commands</span>
-0024 umax=.5*m.umax;
-0025 w=100*2*pi/N; <span class="comment">% frequency</span>
-0026 u1=[umax(1)*sin(w*t);
-0027        zeros(1,N);zeros(1,N)]; 
+0023 u1=0.5*umax(1)*ones(1,N);
+0024 
+0025 w=200*2*pi/N; <span class="comment">% frequency</span>
+0026 t=(0:N-1)*dt; <span class="comment">% time</span>
+0027 u2= .125*umax(2)*ones(1,N);
 0028 
-0029 w=200*2*pi/N; <span class="comment">% frequency</span>
-0030 t=(0:N-1)*dt; <span class="comment">% time</span>
-0031 u2=[zeros(1,N); .5*umax(2)*(sin( w*t - pi/2 )+1);zeros(1,N)];
+0029 u3=0.05*ones(1,N);
+0030 
+0031 U = [u1;u2;u3]; <span class="comment">% concatenate the three phases</span>
 0032 
-0033 u3=u1+u2;
-0034 
-0035 U = [u1,u2,u3]; <span class="comment">% concatenate the three phases</span>
-0036 
-0037 <span class="comment">% simulate</span>
-0038 X = <a href="../simulate/simulate_feedforward.html" class="code" title="function x = simulate_feedforward ( x0, f, u, p )">simulate_feedforward</a> ( x0, f, U, p );
-0039 
-0040 <span class="comment">% plot joint angles, velocities, commands</span>
-0041 subplot(3,1,1),plot(X(1,:)'),ylabel(<span class="string">'q (rad)'</span>)
-0042 subplot(3,1,2),plot(X(2,:)'),ylabel(<span class="string">'dq/dt (rad/s)'</span>)
-0043 subplot(3,1,3),plot(U'),ylabel(<span class="string">'u'</span>),xlabel(<span class="string">'t (s)'</span>)
-0044 
-0045 <span class="comment">%</span>
-0046 rmpath(genpath(curPath))
-0047 rmpath([fatherPath,<span class="string">'/simulate'</span>])</pre></div>
+0033 <span class="comment">% simulate</span>
+0034 X = <a href="../simulate/simulate_feedforward.html" class="code" title="function x = simulate_feedforward ( x0, f, u, p )">simulate_feedforward</a> ( x0, f, U, p );
+0035 
+0036 <span class="comment">% plot joint angles, velocities, commands</span>
+0037 subplot(3,1,1),plot(X(1,:)'),ylabel(<span class="string">'q (rad)'</span>)
+0038 subplot(3,1,2),plot(X(2,:)'),ylabel(<span class="string">'dq/dt (rad/s)'</span>)
+0039 subplot(3,1,3),plot(U'),ylabel(<span class="string">'u'</span>),xlabel(<span class="string">'t (s)'</span>)
+0040 
+0041 <span class="comment">%</span>
+0042 rmpath(genpath(<span class="string">'E:\MACCEPA\smt\maccepa'</span>))
+0043 rmpath(<span class="string">'E:\MACCEPA\smt\simulate'</span>)</pre></div>
 <hr><address>Generated on Wed 10-Feb-2016 17:32:33 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>
