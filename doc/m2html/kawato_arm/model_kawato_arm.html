@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of model_kawato_arm</title>
+  <meta name="keywords" content="model_kawato_arm">
+  <meta name="description" content="Planar 2 degree of freedom human arm model based on Kawato's human arm model.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="#">kawato_arm</a> &gt; model_kawato_arm.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./kawato_arm&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>model_kawato_arm
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Planar 2 degree of freedom human arm model based on Kawato's human arm model.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function model = model_kawato_arm </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Planar 2 degree of freedom human arm model based on Kawato's human arm model.
+
+  out:
+      model.L           - Link length
+           .I           - Inertia
+           .M           - Mass
+           .L_g1        - Centre of gravity
+           .umax,umin   - Max/min. commands
+           .dt          - sample time for control
+           .robot       - Matlab Robotics Toolbox model
+           .q0          - Joint angle at rest position (u=0)
+           .A           - Moment arms
+           .gk          - Muscle elasticity coefficients
+           .k0          - Initial muscle elasticity
+           .gb          - Muscle viscosity coefficients
+           .b0          - Initial muscle viscosity 
+           .gr          - difference with rest length when maximally contracted (assuming u_max=ones)
+           .lm_l0       - Constant for standard posture</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="test_kawato_arm.html" class="code" title="">test_kawato_arm</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% Planar 2 degree of freedom human arm model based on Kawato's human arm model.</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">%  out:</span>
+0004 <span class="comment">%      model.L           - Link length</span>
+0005 <span class="comment">%           .I           - Inertia</span>
+0006 <span class="comment">%           .M           - Mass</span>
+0007 <span class="comment">%           .L_g1        - Centre of gravity</span>
+0008 <span class="comment">%           .umax,umin   - Max/min. commands</span>
+0009 <span class="comment">%           .dt          - sample time for control</span>
+0010 <span class="comment">%           .robot       - Matlab Robotics Toolbox model</span>
+0011 <span class="comment">%           .q0          - Joint angle at rest position (u=0)</span>
+0012 <span class="comment">%           .A           - Moment arms</span>
+0013 <span class="comment">%           .gk          - Muscle elasticity coefficients</span>
+0014 <span class="comment">%           .k0          - Initial muscle elasticity</span>
+0015 <span class="comment">%           .gb          - Muscle viscosity coefficients</span>
+0016 <span class="comment">%           .b0          - Initial muscle viscosity</span>
+0017 <span class="comment">%           .gr          - difference with rest length when maximally contracted (assuming u_max=ones)</span>
+0018 <span class="comment">%           .lm_l0       - Constant for standard posture</span>
+0019 <span class="comment">%</span>
+0020 <a name="_sub0" href="#_subfunctions" class="code">function model = model_kawato_arm</a>
+0021 
+0022 model.name = <span class="string">'Kawato Arm'</span>;
+0023 
+0024 model.dimQ = 2; <span class="comment">% number of joints</span>
+0025 model.dimU = 6; <span class="comment">% number of actuators (commands)</span>
+0026 
+0027 <span class="comment">% Model geometry and dynamics parameters.</span>
+0028 <span class="comment">% Choices for these are based on the paramters in the Katayama/Kawato paper.</span>
+0029 model.L  =  0.3*ones(2,1);  <span class="comment">% link lengths</span>
+0030 model.I  = [0.0477;0.0588]; <span class="comment">% inertia</span>
+0031 model.M  = [1.59; 1.44];    <span class="comment">% mass</span>
+0032 model.Lg = [0.18; 0.21];    <span class="comment">% center of gravity</span>
+0033 model.g  = 0; <span class="comment">% gravity</span>
+0034 
+0035 model.qmax  =  pi/2*ones(2,1); <span class="comment">% joint limits</span>
+0036 model.qmin  = -pi/2*ones(2,1); <span class="comment">% TODO % what is a good value for this?</span>
+0037 model.umax  =  ones(6,1); <span class="comment">% maximum motor command</span>
+0038 model.umin  = zeros(6,1); <span class="comment">% minimum motor command</span>
+0039 
+0040 model.viscous_friction = 0;
+0041 model.coulomb_friction = 0;
+0042 
+0043 <span class="comment">% Muscle parameters vector; note the indices</span>
+0044 <span class="comment">% 1 = shoulder flexor</span>
+0045 <span class="comment">% 2 = shoulder extensor</span>
+0046 <span class="comment">% 3 = elbow flexor</span>
+0047 <span class="comment">% 4 = elbow extensor</span>
+0048 <span class="comment">% 5 = two-joint flexor</span>
+0049 <span class="comment">% 6 = two-joint extensor</span>
+0050 model.A   = 0.01*[4.0 -4.0 0 0 2.8 -2.8;<span class="keyword">...</span><span class="comment">  % constant moment arm matrix</span>
+0051                   0 0 2.5 -2.5 3.5 -3.5]';   <span class="comment">% negative sign added</span>
+0052                                              <span class="comment">% to extensor muscles</span>
+0053 model.gk  = ones(6,1)*1621.6;                <span class="comment">% elasticity coefficients</span>
+0054 model.k0  = ones(6,1)*810.8;                 <span class="comment">% initial elasticity</span>
+0055 model.gb  = ones(6,1)*108.1;                 <span class="comment">% viscosity coefficients</span>
+0056 model.b0  = ones(6,1)*54.1;                              <span class="comment">% initial viscosity</span>
+0057 model.gr  = 0.01*[3.491; 3.491; 2.182; 2.182; 5.498; 5.498]; <span class="comment">% muscle activation constant</span>
+0058 
+0059 <span class="comment">% now define lm-l0 according to the standard posture</span>
+0060 A = model.A;
+0061 K0 = diag(model.k0);
+0062 P = A'*K0;
+0063 Pinv = P'*inv(P*P'); <span class="comment">% pseudo inverse of P=A'*K0</span>
+0064 
+0065 q0 = [45;70]*pi/180;
+0066 delta0 = [0;0;0;0;0;0]; <span class="comment">% defines pre-tension</span>
+0067 
+0068 <span class="comment">% constant for standard posture</span>
+0069 model.lm_l0 = Pinv*A'*K0*A*q0 + (eye(6)-Pinv*P)*delta0;
+0070</pre></div>
+<hr><address>Generated on Tue 02-Feb-2016 14:49:15 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

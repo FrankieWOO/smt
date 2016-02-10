@@ -1,0 +1,11 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  qddot_planar_2_link_arm -> C_planar_2_link_arm;
+  qddot_planar_2_link_arm -> Mq_planar_2_link_arm;
+  qddot_planar_2_link_arm -> g_planar_2_link_arm;
+
+  C_planar_2_link_arm [URL="C_planar_2_link_arm.html"];
+  Mq_planar_2_link_arm [URL="Mq_planar_2_link_arm.html"];
+  g_planar_2_link_arm [URL="g_planar_2_link_arm.html"];
+  qddot_planar_2_link_arm [URL="qddot_planar_2_link_arm.html"];
+}

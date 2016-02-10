@@ -1,0 +1,19 @@
+/* Created by mdot for Matlab */
+digraph m2html {
+  Tm_kawato_arm -> bm_kawato_arm;
+  Tm_kawato_arm -> km_kawato_arm;
+  f_kawato_arm -> qddot_kawato_arm;
+  qddot_kawato_arm -> tau_kawato_arm;
+  tau_kawato_arm -> Tm_kawato_arm;
+  test_kawato_arm -> f_kawato_arm;
+  test_kawato_arm -> model_kawato_arm;
+
+  Tm_kawato_arm [URL="Tm_kawato_arm.html"];
+  bm_kawato_arm [URL="bm_kawato_arm.html"];
+  f_kawato_arm [URL="f_kawato_arm.html"];
+  km_kawato_arm [URL="km_kawato_arm.html"];
+  model_kawato_arm [URL="model_kawato_arm.html"];
+  qddot_kawato_arm [URL="qddot_kawato_arm.html"];
+  tau_kawato_arm [URL="tau_kawato_arm.html"];
+  test_kawato_arm [URL="test_kawato_arm.html"];
+}

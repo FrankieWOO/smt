@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of qddot_planar_2_link_arm</title>
+  <meta name="keywords" content="qddot_planar_2_link_arm">
+  <meta name="description" content="Calculate acceleration for planar 2-link arms, given a function for calculating joint torques">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="#">planar_2_link_arm</a> &gt; qddot_planar_2_link_arm.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./planar_2_link_arm&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>qddot_planar_2_link_arm
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Calculate acceleration for planar 2-link arms, given a function for calculating joint torques</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function qddot = qddot_planar_2_link_arm ( q, qdot, tau, model ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Calculate acceleration for planar 2-link arms, given a function for calculating joint torques
+
+ in:
+      q     - joint angles
+      qdot  - joint velocities
+      tau   - joint torques
+      model - struct containing model parameters
+
+ out:  
+     qddot  - acceleration</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="C_planar_2_link_arm.html" class="code" title="function C = get_coriolis_matrix_planar_2_link_arm ( q, qdot, model )">C_planar_2_link_arm</a>	Calculate Coriolis/centripetal force matrix for planar 2-link arm.</li><li><a href="Mq_planar_2_link_arm.html" class="code" title="function M = get_mass_matrix_planar_2_link_arm ( q, model )">Mq_planar_2_link_arm</a>	Calculate mass matrix for planar 2-link arm.</li><li><a href="g_planar_2_link_arm.html" class="code" title="function G = get_gravity_vector_planar_2_link_arm ( q, model )">g_planar_2_link_arm</a>	Calculate gravity force vector for planar 2-link ar given current joint angles.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href=".././kawato_arm/qddot_kawato_arm.html" class="code" title="function qddot = qddot_kawato_arm ( q, qdot, u, model )">qddot_kawato_arm</a>	Calculate acceleration for Kawato arm model given current joint angles, velocities and muscle activations.</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% Calculate acceleration for planar 2-link arms, given a function for calculating joint torques</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% in:</span>
+0004 <span class="comment">%      q     - joint angles</span>
+0005 <span class="comment">%      qdot  - joint velocities</span>
+0006 <span class="comment">%      tau   - joint torques</span>
+0007 <span class="comment">%      model - struct containing model parameters</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% out:</span>
+0010 <span class="comment">%     qddot  - acceleration</span>
+0011 <span class="comment">%</span>
+0012 <a name="_sub0" href="#_subfunctions" class="code">function qddot = qddot_planar_2_link_arm ( q, qdot, tau, model )</a>
+0013 
+0014 <span class="comment">% mass matrix</span>
+0015 Mq = <a href="Mq_planar_2_link_arm.html" class="code" title="function M = get_mass_matrix_planar_2_link_arm ( q, model )">Mq_planar_2_link_arm</a> ( q, model );
+0016 
+0017 <span class="comment">% coriolis/centripetal term</span>
+0018 C = <a href="C_planar_2_link_arm.html" class="code" title="function C = get_coriolis_matrix_planar_2_link_arm ( q, qdot, model )">C_planar_2_link_arm</a>   ( q, qdot, model );
+0019 
+0020 <span class="comment">% gravity</span>
+0021 g = <a href="g_planar_2_link_arm.html" class="code" title="function G = get_gravity_vector_planar_2_link_arm ( q, model )">g_planar_2_link_arm</a>   ( q, model );
+0022 
+0023 <span class="comment">% acceleration</span>
+0024 qddot=Mq\(tau-C*qdot-g);
+0025 
+0026 <span class="comment">% add friction</span>
+0027 fc = model.coulomb_friction;
+0028 fv = model.viscous_friction;
+0029 qddot = qddot - Mq\(fv*qdot + fc*sign(qdot));
+0030</pre></div>
+<hr><address>Generated on Tue 02-Feb-2016 14:49:15 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

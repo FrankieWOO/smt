@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Mq_planar_2_link_arm</title>
+  <meta name="keywords" content="Mq_planar_2_link_arm">
+  <meta name="description" content="Calculate mass matrix for planar 2-link arm.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="#">planar_2_link_arm</a> &gt; Mq_planar_2_link_arm.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./planar_2_link_arm&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>Mq_planar_2_link_arm
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Calculate mass matrix for planar 2-link arm.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function M = get_mass_matrix_planar_2_link_arm ( q, model ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Calculate mass matrix for planar 2-link arm.
+
+ in:
+      q     - joint angles
+      model - struct containing model parameters
+
+ out:  
+      M     - mass matrix</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="qddot_planar_2_link_arm.html" class="code" title="function qddot = qddot_planar_2_link_arm ( q, qdot, tau, model )">qddot_planar_2_link_arm</a>	Calculate acceleration for planar 2-link arms, given a function for calculating joint torques</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% Calculate mass matrix for planar 2-link arm.</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% in:</span>
+0004 <span class="comment">%      q     - joint angles</span>
+0005 <span class="comment">%      model - struct containing model parameters</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% out:</span>
+0008 <span class="comment">%      M     - mass matrix</span>
+0009 <span class="comment">%</span>
+0010 <a name="_sub0" href="#_subfunctions" class="code">function M = get_mass_matrix_planar_2_link_arm ( q, model )</a>
+0011 
+0012 I   = model.I;  <span class="comment">% inertia</span>
+0013 L   = model.L;  <span class="comment">% link lengths</span>
+0014 M   = model.M;  <span class="comment">% mass</span>
+0015 Lg  = model.Lg; <span class="comment">% center of gravity</span>
+0016 
+0017 <span class="comment">% mass matrix</span>
+0018 M =[I(1)+I(2)+M(2)*(L(1)^2)+2*M(2)*L(1)*Lg(2)*cos(q(2)), I(2)+M(2)*L(1)*Lg(2)*cos(q(2));<span class="keyword">...</span>
+0019     I(2)+M(2)*L(1)*Lg(2)*cos(q(2))                     , I(2)                         ];
+0020</pre></div>
+<hr><address>Generated on Tue 02-Feb-2016 14:49:15 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Tm_kawato_arm</title>
+  <meta name="keywords" content="Tm_kawato_arm">
+  <meta name="description" content="Calculate muscle tension for Kawato arm model given current joint angles, velocities and muscle activations.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="#">kawato_arm</a> &gt; Tm_kawato_arm.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./kawato_arm&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>Tm_kawato_arm
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Calculate muscle tension for Kawato arm model given current joint angles, velocities and muscle activations.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function T = T_kawato_arm ( q, qdot, u, model ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Calculate muscle tension for Kawato arm model given current joint angles, velocities and muscle activations.
+ 
+  in:
+      q     - joint angles
+      qdot  - joint velocities
+      u     - muscle activations
+      model - model struct
+
+  out:
+      T     - muscle tensions</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="bm_kawato_arm.html" class="code" title="function bm = bm_kawato_arm(u,model) %#eml">bm_kawato_arm</a>	Function for computing the muscle damping for the Kawato arm model.</li><li><a href="km_kawato_arm.html" class="code" title="function km = km_kawato_arm(u,model) %#eml">km_kawato_arm</a>	Function for computing the muscle stiffnesses for the Kawato arm model.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="tau_kawato_arm.html" class="code" title="function tau = tau_kawato_arm ( q, qdot, u, model )">tau_kawato_arm</a>	Calculate torque for Kawato arm model given current joint angles, velocities and muscle activations.</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% Calculate muscle tension for Kawato arm model given current joint angles, velocities and muscle activations.</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">%  in:</span>
+0004 <span class="comment">%      q     - joint angles</span>
+0005 <span class="comment">%      qdot  - joint velocities</span>
+0006 <span class="comment">%      u     - muscle activations</span>
+0007 <span class="comment">%      model - model struct</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%  out:</span>
+0010 <span class="comment">%      T     - muscle tensions</span>
+0011 <span class="comment">%</span>
+0012 <a name="_sub0" href="#_subfunctions" class="code">function T = T_kawato_arm ( q, qdot, u, model )</a>
+0013 
+0014 N = size(q,2);
+0015 
+0016 A    = model.A ; <span class="comment">% moment arms</span>
+0017 gr   = model.gr; <span class="comment">% constant</span>
+0018 lm_l0= model.lm_l0;
+0019 
+0020 <span class="keyword">for</span> n=1:N
+0021     km   = <a href="km_kawato_arm.html" class="code" title="function km = km_kawato_arm(u,model) %#eml">km_kawato_arm</a>(u(:,n),model); 
+0022     bm   = <a href="bm_kawato_arm.html" class="code" title="function bm = bm_kawato_arm(u,model) %#eml">bm_kawato_arm</a>(u(:,n),model);
+0023 
+0024     ldot = -A*qdot(:,n);
+0025 
+0026     T(:,n) = km.*(lm_l0 - A*q(:,n) + gr.*u(:,n)) + bm.*ldot;
+0027 <span class="keyword">end</span>
+0028 
+0029</pre></div>
+<hr><address>Generated on Tue 02-Feb-2016 14:49:15 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>
