@@ -1,6 +1,9 @@
 clear all
-addpath(genpath('E:\MACCEPA\smt\maccepa'))
-addpath('E:\MACCEPA\smt\simulate')
+curPath = pwd;
+curPaths = strsplit(curPath,{'\','/'});
+fatherPath = strjoin(curPaths(1:end-1),'/');
+addpath(genpath(curPath));
+addpath([fatherPath,'/simulate']);
 
 % set up simulation
 dt = .02;              % control frequency
@@ -40,5 +43,5 @@ subplot(3,1,2),plot(X(2,:)'),ylabel('dq/dt (rad/s)')
 subplot(3,1,3),plot(U'),ylabel('u'),xlabel('t (s)')
 
 %
-rmpath(genpath('E:\MACCEPA\smt\maccepa'))
-rmpath('E:\MACCEPA\smt\simulate')
+rmpath(genpath(curPath))
+rmpath([fatherPath,'/simulate'])
