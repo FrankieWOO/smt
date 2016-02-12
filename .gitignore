@@ -51,8 +51,10 @@ $RECYCLE.BIN/
 *.dSYM/
 
 # =========================
-# Matlab temp file
+# Matlab temp file and MEX file
 # =========================
+.mexw64
+.mexa64
 
 # =========================
 # Operating System Files
