@@ -53,8 +53,7 @@ $RECYCLE.BIN/
 # =========================
 # Matlab temp file and MEX file
 # =========================
-.mexw64
-.mexa64
+*.m~
 
 # =========================
 # Operating System Files
