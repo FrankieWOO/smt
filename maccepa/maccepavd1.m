@@ -43,6 +43,6 @@ subplot(3,1,1),plot(X(1,:)'),ylabel('q (rad)')
 subplot(3,1,2),plot(X(2,:)'),ylabel('dq/dt (rad/s)')
 subplot(3,1,3),plot(U'),ylabel('u'),xlabel('t (s)')
 
-% rm path
+%% rm path
 rmpath(genpath(curPath))
 rmpath([fatherPath,'/simulate'])
